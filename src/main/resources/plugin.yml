@@ -1,0 +1,5 @@
+name: LegWeapon
+version: '1.0'
+main: ru.spfort.legWeapon.LegWeapon
+api-version: '1.21'
+depend: [ProtocolLib, NBTAPI]
