@@ -18,6 +18,7 @@ class Messages : Config {
     val cooldownActionbar: String = "<gold><cooldown>"
     val youHaveCooldownMessage: String = "<red>Подождите перед следующим использованием!"
     val itemCrafted: String = "<yellow><player> скрафтил <item>"
+    val configReloaded: String = "<#00FF00>[✔] Конфиг перезагружен."
     @Serializable(with = SimpleSoundKeySerializer::class)
     val itemCraftedSound: Key = Registry.SOUNDS.getKey(Sound.ENTITY_PLAYER_LEVELUP)!!
 

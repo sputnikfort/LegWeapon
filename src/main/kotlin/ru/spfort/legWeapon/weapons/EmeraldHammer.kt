@@ -1,15 +1,12 @@
 package ru.spfort.legWeapon.weapons
 
 import org.bukkit.Location
-import org.bukkit.Material
-import org.bukkit.NamespacedKey
 import org.bukkit.Particle
 import org.bukkit.Sound
 import org.bukkit.entity.Damageable
 import org.bukkit.entity.Entity
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
-import org.bukkit.inventory.Recipe
 import org.bukkit.inventory.ShapedRecipe
 import ru.spfort.legWeapon.plugin
 import kotlin.math.sqrt
@@ -18,19 +15,20 @@ class EmeraldHammer(
     name: String,
     id: String,
     item: ItemStack,
-    cooldownTime: Long
-): Weapon(id, name, item, cooldownTime) {
+    cooldownTime: Long,
+    craft: ShapedRecipe
+): Weapon(id, name, item, cooldownTime, craft) {
     override fun damage(damager: Player, target: Entity) {
     }
 
     override fun use(player: Player) {
-        val RADIUS = 6.0
-        val KNOCKBACK_STRENGTH = 1.2
-        val UPWARD = 0.4
+        val radius = 6.0
+        val knockbackStrength = 1.2
+        val upward = 0.4
 
         val center: Location = player.location
 
-        for (entity in player.world.getNearbyEntities(center, RADIUS, RADIUS, RADIUS)) {
+        for (entity in player.world.getNearbyEntities(center, radius, radius, radius)) {
             if (entity.uniqueId == player.uniqueId) continue
 
             val dx = entity.location.x - center.x
@@ -40,12 +38,12 @@ class EmeraldHammer(
                 Pair((Math.random() - 0.5) * 0.1, (Math.random() - 0.5) * 0.1)
             } else {
                 val len = sqrt(dx * dx + dz * dz)
-                Pair(dx / len * KNOCKBACK_STRENGTH, dz / len * KNOCKBACK_STRENGTH)
+                Pair(dx / len * knockbackStrength, dz / len * knockbackStrength)
             }
 
             val velocity = entity.velocity
             velocity.x = vx
-            velocity.y = UPWARD
+            velocity.y = upward
             velocity.z = vz
             entity.velocity = velocity
 
@@ -74,16 +72,4 @@ class EmeraldHammer(
 
     override fun kill(killer: Player, victim: Entity) {
     }
-
-    override val craft: Recipe
-        get() = ShapedRecipe(NamespacedKey(plugin, id), item).apply {
-            shape(
-                "ELE",
-                "EBE",
-                " B "
-            )
-            setIngredient('L', Material.LODESTONE)
-            setIngredient('E', Material.EMERALD_BLOCK)
-            setIngredient('B', Material.BREEZE_ROD)
-        }
 }

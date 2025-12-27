@@ -3,13 +3,10 @@ package ru.spfort.legWeapon.weapons
 import com.comphenix.protocol.PacketType
 import com.comphenix.protocol.events.PacketContainer
 import com.comphenix.protocol.wrappers.BlockPosition
-import dev.triumphteam.gui.paper.builder.item.ItemBuilder
 import org.bukkit.Material
-import org.bukkit.NamespacedKey
 import org.bukkit.entity.Entity
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
-import org.bukkit.inventory.Recipe
 import org.bukkit.inventory.ShapedRecipe
 import org.bukkit.scheduler.BukkitRunnable
 import ru.spfort.legWeapon.plugin
@@ -22,8 +19,9 @@ class IceKatana(
     id: String,
     item: ItemStack,
     val abilityDuration: Long,
-    cooldownTime: Long
-) : Weapon(id, name, item, cooldownTime) {
+    cooldownTime: Long,
+    craft: ShapedRecipe
+) : Weapon(id, name, item, cooldownTime, craft) {
     override fun damage(damager: Player, target: Entity) {
         var i = 0
         plugin.server.asyncScheduler.runAtFixedRate(
@@ -76,21 +74,6 @@ class IceKatana(
     }
 
     override fun kill(killer: Player, victim: Entity) {}
-
-    override val craft: Recipe = ShapedRecipe(
-        NamespacedKey(plugin, id),
-        ItemBuilder.from(item).asItemStack()
-    ).apply {
-        shape(
-            "IPI",
-            "IDI",
-            "IBI"
-        )
-        setIngredient('I', Material.DIAMOND)
-        setIngredient('D', Material.DIAMOND_SWORD)
-        setIngredient('B', Material.IRON_BLOCK)
-        setIngredient('P', Material.POWDER_SNOW_BUCKET)
-    }
 
     private fun sendBreakAnimation(player: Player, x: Int, y: Int, z: Int, stage: Int, fakeId: Int) {
         val packet: PacketContainer = protocolManager.createPacket(PacketType.Play.Server.BLOCK_BREAK_ANIMATION)

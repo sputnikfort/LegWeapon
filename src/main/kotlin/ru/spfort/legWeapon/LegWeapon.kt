@@ -3,6 +3,9 @@ package ru.spfort.legWeapon
 import com.comphenix.protocol.ProtocolLibrary
 import com.filkond.paperktlib.config.ext.JsonConfigManager
 import com.filkond.paperktlib.config.ext.load
+import com.filkond.paperktlib.config.ext.loadCompanion
+import com.filkond.paperktlib.config.ext.reloadAll
+import com.filkond.paperktlib.config.ext.saveAll
 import dev.triumphteam.cmd.bukkit.BukkitCommandManager
 import org.bukkit.NamespacedKey
 import org.bukkit.plugin.java.JavaPlugin
@@ -14,7 +17,6 @@ import ru.spfort.legWeapon.weapons.Weapon
 
 lateinit var plugin: LegWeapon
 
-lateinit var weaponsConfig: WeaponsConfig
 lateinit var messages: Messages
 
 lateinit var pluginKey: NamespacedKey
@@ -25,21 +27,20 @@ val weaponsRegistry: Map<String, Weapon>
     get() = registries
 
 class LegWeapon : JavaPlugin() {
+
+    val configManager = JsonConfigManager(dataFolder)
+
     override fun onEnable() {
+        configManager.saveAll()
         plugin = this
 
         pluginKey = NamespacedKey(plugin, "LegWeaponID")
 
-        val configManager = JsonConfigManager(dataFolder)
         messages = configManager.load<Messages>("messages.json")
-        weaponsConfig = configManager.load<WeaponsConfig>("weapons.json")
 
-        weaponsConfig.settings.filter { it.enabled }
-            .map { it.getRegistry() }
-            .forEach {
-                registries[it.id] = it
-                plugin.server.addRecipe(it.craft)
-            }
+        configManager.loadCompanion<WeaponsConfig>("weapons.json")
+
+        loadWeapons()
 
         server.pluginManager.registerEvents(PlayerListener(), this)
 
@@ -47,5 +48,25 @@ class LegWeapon : JavaPlugin() {
         commandManager.registerArgument(Weapon::class.java){ _, arg -> weaponsRegistry[arg] }
         commandManager.registerSuggestion(Weapon::class.java){ _, _ -> weaponsRegistry.keys.toList() }
         commandManager.registerCommand(LWCommand())
+    }
+
+    private fun loadWeapons(){
+        WeaponsConfig.settings.filter { it.enabled }
+            .map { it.getRegistry() }
+            .forEach {
+                registries[it.id] = it
+                plugin.server.addRecipe(it.craft)
+            }
+    }
+
+    fun reloadWeaponConfig(){
+        configManager.reload(WeaponsConfig::class)
+        registries.clear()
+        loadWeapons()
+    }
+
+    override fun onDisable() {
+        configManager.reloadAll()
+        configManager.saveAll()
     }
 }
