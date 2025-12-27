@@ -15,20 +15,25 @@ import ru.spfort.legWeapon.weapons.Weapon
 @Suppress("unused")
 @Command("legWeapon", alias = ["lw"])
 class LWCommand: BaseCommand() {
+
     @Permission("lw.admin.command.get")
     @SubCommand("get")
     fun get(sender: CommandSender, weapon: Weapon) {
         if (sender !is Player) return
         sender.inventory.addItem(weapon.item)
     }
-    @SubCommand("recipes")
-    fun recipes(sender: CommandSender) {
-        if (sender !is Player) return
-        sender.openRecipes()
-    }
+
+    @Permission("lw.admin.command.reload")
     @SubCommand("reload")
     fun reload(sender: CommandSender) {
         plugin.reloadWeaponConfig()
         sender.sendMessage(messages.configReloaded.deserialize())
     }
+
+    @SubCommand("recipes")
+    fun recipes(sender: CommandSender) {
+        if (sender !is Player) return
+        sender.openRecipes()
+    }
+
 }
