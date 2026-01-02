@@ -1,4 +1,4 @@
-package ru.spfort.legWeapon.weapons
+package ru.spfort.legWeapon.items.weapons
 
 import org.bukkit.Location
 import org.bukkit.Particle

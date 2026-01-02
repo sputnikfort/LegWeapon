@@ -1,4 +1,4 @@
-package ru.spfort.legWeapon.weapons
+package ru.spfort.legWeapon.items.weapons
 
 import com.comphenix.protocol.PacketType
 import com.comphenix.protocol.events.PacketContainer

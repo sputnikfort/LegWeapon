@@ -12,8 +12,9 @@ import org.bukkit.plugin.java.JavaPlugin
 import ru.spfort.legWeapon.commands.LWCommand
 import ru.spfort.legWeapon.config.Messages
 import ru.spfort.legWeapon.config.WeaponsConfig
+import ru.spfort.legWeapon.items.LegItem
 import ru.spfort.legWeapon.listener.PlayerListener
-import ru.spfort.legWeapon.weapons.Weapon
+import ru.spfort.legWeapon.items.weapons.Weapon
 
 lateinit var plugin: LegWeapon
 
@@ -22,8 +23,8 @@ lateinit var messages: Messages
 lateinit var pluginKey: NamespacedKey
 
 val protocolManager = ProtocolLibrary.getProtocolManager()!!
-private val registries = mutableMapOf<String, Weapon>()
-val weaponsRegistry: Map<String, Weapon>
+private val registries = mutableMapOf<String, LegItem>()
+val weaponsRegistry: Map<String, LegItem>
     get() = registries
 
 class LegWeapon : JavaPlugin() {

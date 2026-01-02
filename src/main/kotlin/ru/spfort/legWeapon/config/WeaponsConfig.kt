@@ -13,10 +13,10 @@ import org.bukkit.inventory.ShapedRecipe
 import org.bukkit.persistence.PersistentDataType
 import ru.spfort.legWeapon.plugin
 import ru.spfort.legWeapon.pluginKey
-import ru.spfort.legWeapon.weapons.AppleSword
-import ru.spfort.legWeapon.weapons.EmeraldHammer
-import ru.spfort.legWeapon.weapons.IceKatana
-import ru.spfort.legWeapon.weapons.Weapon
+import ru.spfort.legWeapon.items.weapons.AppleSword
+import ru.spfort.legWeapon.items.weapons.EmeraldHammer
+import ru.spfort.legWeapon.items.weapons.IceKatana
+import ru.spfort.legWeapon.items.weapons.Weapon
 import ru.spfort.legWeapon.weaponsRegistry
 
 @Serializable

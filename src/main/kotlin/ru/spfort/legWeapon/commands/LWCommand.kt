@@ -10,7 +10,7 @@ import org.bukkit.entity.Player
 import ru.spfort.legWeapon.RecipesGui.openRecipes
 import ru.spfort.legWeapon.messages
 import ru.spfort.legWeapon.plugin
-import ru.spfort.legWeapon.weapons.Weapon
+import ru.spfort.legWeapon.items.weapons.Weapon
 
 @Suppress("unused")
 @Command("legWeapon", alias = ["lw"])
