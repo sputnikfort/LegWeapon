@@ -4,7 +4,6 @@ import org.bukkit.Location
 import org.bukkit.Particle
 import org.bukkit.Sound
 import org.bukkit.entity.Damageable
-import org.bukkit.entity.Entity
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.ShapedRecipe
@@ -18,9 +17,6 @@ class EmeraldHammer(
     cooldownTime: Long,
     craft: ShapedRecipe
 ): Weapon(id, name, item, cooldownTime, craft) {
-    override fun damage(damager: Player, target: Entity) {
-    }
-
     override fun use(player: Player) {
         val radius = 6.0
         val knockbackStrength = 1.2
@@ -68,8 +64,5 @@ class EmeraldHammer(
             plugin.server.createBlockData("minecraft:stone")
         )
         player.world.playSound(center, Sound.ITEM_MACE_SMASH_GROUND, 1.0f, 1.0f)
-    }
-
-    override fun kill(killer: Player, victim: Entity) {
     }
 }

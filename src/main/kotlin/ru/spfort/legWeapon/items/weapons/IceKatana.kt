@@ -22,7 +22,7 @@ class IceKatana(
     cooldownTime: Long,
     craft: ShapedRecipe
 ) : Weapon(id, name, item, cooldownTime, craft) {
-    override fun damage(damager: Player, target: Entity) {
+    override fun damage(player: Player, target: Entity) {
         var i = 0
         plugin.server.asyncScheduler.runAtFixedRate(
             plugin,
@@ -72,8 +72,6 @@ class IceKatana(
 
         plugin.server.asyncScheduler.runDelayed(plugin, {task.cancel()}, abilityDuration, TimeUnit.SECONDS)
     }
-
-    override fun kill(killer: Player, victim: Entity) {}
 
     private fun sendBreakAnimation(player: Player, x: Int, y: Int, z: Int, stage: Int, fakeId: Int) {
         val packet: PacketContainer = protocolManager.createPacket(PacketType.Play.Server.BLOCK_BREAK_ANIMATION)

@@ -14,9 +14,9 @@ class AppleSword(
     craft: ShapedRecipe,
 ) : Weapon(id, name, item, cooldownTime, craft) {
 
-    override fun kill(killer: Player, victim: Entity) {
+    override fun kill(player: Player, victim: Entity) {
         if (victim !is Player) return
-        if (victim.killer != killer) return
-        killer.getAttribute(Attribute.MAX_HEALTH)!!.baseValue += 2.0
+        if (victim.killer != player) return
+        player.getAttribute(Attribute.MAX_HEALTH)!!.baseValue += 2.0
     }
 }
